@@ -12,9 +12,9 @@ type storage = {
     
 let%init storage
     (owner : address) (totalSupply : nat) (decimals : nat)
-    (name : string) (symbol : string) =  
+    (name : string) (symbol : string) =   
   {
-    balances = (Map : (address, nat)map);
+    balances = Map.add owner totalSupply (Map : (address, nat)map);
     version = 1p;
     totalSupply;
     decimals;
@@ -58,5 +58,4 @@ let%entry main
                 let op = Contract.call ~dest:contr ~amount:0tz ~entry:tokenFallback ~parameter:contract_data in   
                 (([op]), storage)
       else  
-        (([] : operation list), storage)  
-                  
+        (([] : operation list), storage) 
